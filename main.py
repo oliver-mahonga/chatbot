@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 hf_api_token = os.getenv("HF_API_TOKEN")
 if not hf_api_token:
-    print("ERROR: HF_API_TOKEN not found in .env file")
+    print("ERROR: error in hugging face API ")
 app = FastAPI()
 app.mount("/", StaticFiles(directory=".", html=True), name="static")
 
