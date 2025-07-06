@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formation AI: Your Intelligent Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #1e1e2f 0%, #2a2a4a 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #00d4ff;
+            text-align: center;
+        }
+        p.subtitle {
+            font-size: 1.2em;
+            color: #d0d0e0;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        button {
+            background: #00d4ff;
+            color: #1e1e2f;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        button:hover {
+            background: #00b8e6;
+            transform: translateY(-2px);
+        }
+        input[type="text"] {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 12px;
+            font-size: 1.1em;
+            color: #ffffff;
+            border-radius: 25px;
+            outline: none;
+            width: 100%;
+        }
+        input[type="text"]::placeholder {
+            color: #a0a0c0;
+        }
+        .response-area {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            min-height: 100px;
+            font-size: 1.1em;
+            color: #e0e0f0;
+            margin-top: 20px;
+            text-align: left;
+            overflow-y: auto;
+        }
+        footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #a0a0c0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Formation AI: Your Intelligent Assistant</h1>
+        <p class="subtitle">Created by Oliver, Powered by AI</p>
+        
+        <div class="input-group">
+            <button onclick="startVoiceChat()">Start Voice Interaction</button>
+            <div>
+                <input type="text" id="textInput" placeholder="Ask me anything...">
+                <button onclick="sendText()">Submit</button>
+            </div>
+        </div>
+        
+        <div class="response-area" id="response">
+            ask me anything
+        </div>
+        
+        <footer>Powered by Oliver’s Vision & Innovation</footer>
+    </div>
+
+    <script>
+        function startVoiceChat() {
+            alert("Voice interaction isn’t implemented yet, but text works great!");
+        }
+
+        async function sendText() {
+            const text = document.getElementById('textInput').value;
+            if (!text) return;
+
+            const responseArea = document.getElementById('response');
+            responseArea.innerText = `You asked: ${text}`;
+
+            try {
+                const response = await fetch('/chat/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: text })
+                });
+                const data = await response.json();
+                console.log("Frontend received:", data); // Debug log
+                responseArea.innerText = data.response || "Error: No response received";
+            } catch (error) {
+                responseArea.innerText = "Error: Something went wrong!";
+                console.error('Error:', error);
+            }
+
+            document.getElementById('textInput').value = '';
+        }
+
+        document.getElementById('textInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendText();
+        });
+    </script>
+</body>
+</html>
